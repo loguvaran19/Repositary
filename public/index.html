@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Personal AI Chatbot — LinkedIn Knowledge Base</title>
+  <meta name="description" content="Local AI chatbot that accurately answers questions about your career, experience, and education using your LinkedIn profile markdown." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app-layout">
+    <!-- Top Navigation Bar -->
+    <header class="app-header">
+      <div class="header-brand">
+        <div class="brand-logo">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+        </div>
+        <div>
+          <h1 class="brand-title">Personal AI Representative</h1>
+          <p class="brand-subtitle">Strictly grounded in your local LinkedIn profile</p>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div id="profileStatusBadge" class="status-badge status-loading">
+          <span class="status-dot"></span>
+          <span id="profileStatusText">Checking Profile...</span>
+        </div>
+        <button id="viewToggleBtn" class="btn btn-secondary mobile-only" type="button">
+          Toggle Profile / Chat
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Dual-Column Content -->
+    <main class="app-main">
+      <!-- Left Column: Knowledge Base & Upload -->
+      <section class="panel panel-knowledge" id="knowledgePanel">
+        <div class="panel-header">
+          <div class="panel-title-wrap">
+            <div class="panel-icon">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                <polyline points="14 2 14 8 20 8"></polyline>
+                <line x1="16" y1="13" x2="8" y2="13"></line>
+                <line x1="16" y1="17" x2="8" y2="17"></line>
+                <polyline points="10 9 9 9 8 9"></polyline>
+              </svg>
+            </div>
+            <div>
+              <h2 class="panel-title">Knowledge Base</h2>
+              <p class="panel-desc">Source: <code class="code-tag">data/linkedin_profile.md</code></p>
+            </div>
+          </div>
+          <button id="refreshProfileBtn" class="btn btn-icon" title="Reload from disk" type="button">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="23 4 23 10 17 10"></polyline>
+              <polyline points="1 20 1 14 7 14"></polyline>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Upload & Input Accordion -->
+        <div class="upload-section">
+          <div class="dropzone" id="dropZone">
+            <input type="file" id="fileInput" accept=".pdf,.docx,.doc,.txt,.html,.htm,.md" class="file-input-hidden" />
+            <div class="dropzone-content">
+              <div class="dropzone-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                  <polyline points="17 8 12 3 7 8"></polyline>
+                  <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+              </div>
+              <p class="dropzone-primary-text">Drag & drop your LinkedIn file here, or <span class="highlight">browse</span></p>
+              <p class="dropzone-sub-text">Supported: PDF, DOCX, DOC, HTML, TXT, MD (Max 10MB)</p>
+            </div>
+          </div>
+
+          <!-- URL Input Option -->
+          <div class="url-import-box">
+            <div class="input-prefix-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="2" y1="12" x2="22" y2="12"></line>
+                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+              </svg>
+            </div>
+            <input type="url" id="urlInput" placeholder="Or enter publicly accessible webpage URL..." class="url-field" />
+            <button id="urlImportBtn" class="btn btn-primary" type="button">Import</button>
+          </div>
+
+          <div class="info-callout">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="16" x2="12" y2="12"></line>
+              <line x1="12" y1="8" x2="12.01" y2="8"></line>
+            </svg>
+            <span><strong>LinkedIn Tip:</strong> LinkedIn prevents direct web scrapers. To import, visit LinkedIn &gt; click <em>More (...)</em> on your profile &gt; select <em>Save to PDF</em> &gt; drag the PDF above.</span>
+          </div>
+        </div>
+
+        <!-- Stats Bar -->
+        <div class="profile-stats-bar" id="statsBar">
+          <div class="stat-pill">
+            <span class="stat-label">Words</span>
+            <span class="stat-val" id="statWords">0</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-label">Characters</span>
+            <span class="stat-val" id="statChars">0</span>
+          </div>
+          <div class="stat-pill">
+            <span class="stat-label">Sections</span>
+            <span class="stat-val" id="statSections">0</span>
+          </div>
+        </div>
+
+        <!-- Markdown Preview Section -->
+        <div class="preview-header">
+          <span class="preview-title">Markdown Preview</span>
+          <div class="preview-actions">
+            <button id="copyMdBtn" class="btn btn-tiny" type="button">Copy</button>
+            <button id="toggleRawMdBtn" class="btn btn-tiny" type="button">Raw / Formatted</button>
+          </div>
+        </div>
+
+        <div class="markdown-preview-container" id="markdownPreviewContainer">
+          <div id="formattedPreview" class="markdown-body">
+            <p class="empty-state-text">No profile loaded. Upload a document or enter a URL above.</p>
+          </div>
+          <pre id="rawPreview" class="raw-markdown-pre hidden"></pre>
+        </div>
+      </section>
+
+      <!-- Right Column: Interactive Chat Interface -->
+      <section class="panel panel-chat" id="chatPanel">
+        <!-- Chat Header -->
+        <div class="chat-header">
+          <div class="persona-info">
+            <div class="persona-avatar">
+              <span>AI</span>
+              <span class="avatar-online-dot"></span>
+            </div>
+            <div>
+              <h2 class="persona-name">My Career AI Assistant</h2>
+              <p class="persona-status">Answering as me • 100% grounded in profile facts</p>
+            </div>
+          </div>
+          <div class="chat-header-actions">
+            <button id="clearChatBtn" class="btn btn-secondary btn-sm" type="button" title="Clear conversation history">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <polyline points="3 6 5 6 21 6"></polyline>
+                <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+              </svg>
+              <span>Clear Chat</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Chat History List -->
+        <div class="chat-messages" id="chatMessages">
+          <!-- Initial Welcome Message -->
+          <div class="message-row message-assistant">
+            <div class="msg-avatar">AI</div>
+            <div class="msg-content-wrapper">
+              <div class="msg-bubble">
+                <p>Hello! I am an AI chatbot representing this profile. Ask me anything about my work experience, education, technical skills, or achievements.</p>
+                <p class="msg-subtext">I only answer using verified profile details in first person, and will tell you if something isn't in my profile.</p>
+              </div>
+              <div class="msg-source-tag">
+                <span class="source-icon">📌</span>
+                <span>Source: Profile Overview</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quick Prompts / Chips -->
+        <div class="quick-prompts-bar" id="quickPrompts">
+          <span class="prompts-label">Try asking:</span>
+          <button class="prompt-chip" type="button">What is your current role and focus?</button>
+          <button class="prompt-chip" type="button">Where did you study?</button>
+          <button class="prompt-chip" type="button">What are your top technical skills?</button>
+          <button class="prompt-chip" type="button">What are your notable achievements?</button>
+          <button class="prompt-chip" type="button">Do you have a pilot license?</button>
+        </div>
+
+        <!-- Chat Input Area -->
+        <form id="chatForm" class="chat-input-area">
+          <div class="input-wrapper">
+            <textarea
+              id="messageInput"
+              rows="1"
+              placeholder="Ask me anything about my experience, projects, or background... (Press Enter to send)"
+              autocomplete="off"
+            ></textarea>
+            <button type="submit" id="sendBtn" class="btn-send" title="Send message" aria-label="Send message">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="22" y1="2" x2="11" y2="13"></line>
+                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+              </svg>
+            </button>
+          </div>
+          <p class="input-footnote">Answers are generated locally via OpenAI based strictly on <code class="code-tag">linkedin_profile.md</code>.</p>
+        </form>
+      </section>
+    </main>
+  </div>
+
+  <!-- Global Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+# Secrets and environment
+.env
+
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+ENV/
+
+# System and IDE
+.DS_Store
+.idea/
+.vscode/
+
+# Temp uploads
+temp/
+scratch/

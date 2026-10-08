@@ -1,0 +1,52 @@
+# Profile Overview
+
+- L O G U  V A R A N
+- 9487721646 |  loguvaran19@gmail.com
+- https://www.linkedin.com/in/logu-varan-57b095247.com|Velachery, Chennai
+- P R O F I L E
+- MBA student specializing in Finance with internship experience in business operations
+- and a strong interest in financial analysis and corporate finance. Skilled in analytical
+- thinking, financial data interpretation, and organizational processes, with a keen ability
+- to learn and adapt to new environments. A detail-oriented and motivated professional
+- seeking to contribute effectively to finance and accounting operations while
+continuously developing practical financial expertise.
+- I N T E R N S H I P  E X P E R I E N C E
+- UPS consultancy services
+- January-March 2025
+- HR RECRUITER
+- BUSINESS OPERATION
+- SVR roofing
+- September 2024
+- E D U C A T I O N
+- DG Vaishnav College(2025-2027)
+- S K I L L S
+- C E R T I F I C A T I O N S
+- Python basics
+- Microsoft Office(Excel,Word,Powerpoint)
+- Tally Prime Accounting software
+- Canva
+- Master's of Business Administration
+- Sathyabama University(2022-2025)
+- Bachelor's of Commerce
+- Vikasa School, Tuticorin, ICSE
+- Completed in 2022
+- December 2025-January 2026
+- Airport Authority of India
+- HR
+- Communication skills
+- Time management
+- Problem solving
+- Adaptability
+- Recruitment coordination
+- Candidate screening
+- Interview scheduling
+- SPSS
+- Minitab
+- Tableau
+- R and R Studio
+- DIGITAL MARKETING
+- Casagrand
+- May-June 2026
+- MBA Student | Marketing | Finance | Business Analytics
+
+---
